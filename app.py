@@ -4,6 +4,7 @@ from flask import abort
 from flask import make_response
 from flask import request
 from flask import url_for
+from OpenSSL import SSL
 
 app = Flask(__name__)
 
@@ -15,6 +16,7 @@ logs = [
     }
 ]
 
+context = ('server.crt', 'server.key')
 
 @app.route('/rsyslog/syslog.log', methods=['GET'])
 def get_logs():
@@ -82,4 +84,4 @@ def delete_log(log_id):
 #     return new_log
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0', ssl_context=context)
